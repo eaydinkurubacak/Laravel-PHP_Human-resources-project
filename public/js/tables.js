@@ -1,9 +1,16 @@
-// Initialize the DataTable
 $(document).ready(function () {
-    $('#example').DataTable({
-    // Set the pagination length menu
-    // to the given allowed sizes
-    "lengthMenu": 10,
-    "lengthChange": false
+  // Initialize DataTable for Employees Records table
+  $('#employee_records').DataTable({
+      "lengthMenu": 10,
+      "lengthChange": false,
+      "ordering": false
   });
+});
+
+$(document).ready(function () {
+  $('#company_records').DataTable({
+  "lengthMenu": 10,
+  "lengthChange": false,
+  "ordering": false
+});
 });
