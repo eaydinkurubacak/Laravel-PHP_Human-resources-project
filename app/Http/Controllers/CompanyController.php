@@ -38,6 +38,6 @@ class CompanyController extends Controller
             'website' => $incomingFields['company_website']
         ]);
 
-        return 'Hello';
+        return redirect('/');
     }
 }

@@ -12,8 +12,6 @@ class UserController extends Controller
             'login_password' => 'required'
         ]);
 
-        //return $incomingFields['login_email'] . ' ' . $incomingFields['login_password'];
-        
         if(auth()->attempt(['email' => $incomingFields['login_email'],'password' => $incomingFields['login_password']])){
             $request->session()->regenerate();
         }

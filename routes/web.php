@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +17,10 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('login&main');
+    $companies = Company::all();
+    return view('login&main' , ['companies' => $companies]);
 });
 
 Route::post('/login' , [UserController::class , 'login']);
 Route::post('/logout' , [UserController::class , 'logout']);
+Route::post('/create-company' , [CompanyController::class , 'createCompany']);
