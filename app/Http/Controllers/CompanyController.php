@@ -17,16 +17,9 @@ class CompanyController extends Controller
             'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'company_website' => 'nullable'
         ]);
-
-        // return $incomingFields['company_logo']; // directory dönüyor.
-
         
         $imageName = time() . '.' . $request->company_logo->extension();  
         $request->company_logo->storeAs('public', $imageName); // storage/app/public/file.png
-
-        /*
-        Company::create($incomingFields);
-        */
 
         // DB kayıt işlemi başarılı.
         $company = Company::create([

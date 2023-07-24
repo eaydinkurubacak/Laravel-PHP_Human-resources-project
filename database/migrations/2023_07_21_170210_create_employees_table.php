@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone');
             $table->string('email')->unique();
-            $table->foreignId('company')->constrained('companies');
+            $table->foreignId('company_id')->constrained('companies');
 
             $table->timestamps();
         });

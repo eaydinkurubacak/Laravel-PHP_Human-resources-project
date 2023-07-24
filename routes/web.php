@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\Company;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,11 @@ use App\Http\Controllers\CompanyController;
 
 Route::get('/', function () {
     $companies = Company::all();
-    return view('login&main' , ['companies' => $companies]);
+    $employees = Employee::all();
+    return view('login&main' , ['companies' => $companies , 'employees' => $employees]);
 });
 
 Route::post('/login' , [UserController::class , 'login']);
 Route::post('/logout' , [UserController::class , 'logout']);
 Route::post('/create-company' , [CompanyController::class , 'createCompany']);
+Route::post('/create-employee' , [EmployeeController::class , 'createEmployee']);
