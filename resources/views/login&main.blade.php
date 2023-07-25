@@ -85,30 +85,40 @@
                         @foreach ($companies as $company)
                             <tr> 
                                 <td>{{$company['name']}}</td>
-                                <td>{{$company['address']}}</td>
+
+                                <td>
+                                    <a class="my-2 btn btn-outline-info" href="https://www.google.com/maps/search/{{$company->address}}" target="_blank">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </a>
+                                </td>
+
                                 <td>{{$company['phone']}}</td>
                                 <td>{{$company['email']}}</td>
                             
                                 <!-- You don't need to repeat the curly braces inside your first pair. -->
                                 <td><img style="width: 50px; height: 50px;" class="rounded-circle" src="{{ asset('storage/'.$company['logo']) }}" alt="logo" /></td>
 
-                                <td>{{$company['website']}}</td>
+                                <td>
+                                    <a class="my-2 btn btn-outline-warning" href="{{$company['website']}}">
+                                        <i class="bi bi-globe"></i>
+                                    </a>
+                                </td>
 
                                 <td>
                                     <div class="col-6">
-                                        <form class="my-2" action="/logout" method="POST">
-                                            @csrf
-                                            <button class="btn btn-outline-success">
-                                                <!-- Edit icon -->
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                        </form>
+
+                                        <a class="my-2 btn btn-outline-success" href="/edit-company/{{$company->id}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
                                     </div>
                                 </td>
+
                                 <td>
                                     <div class="col-6">
-                                        <form class="my-2" action="/logout" method="POST">
+                                        <form class="my-2" action="/delete-company/{{$company->id}}" method="POST">
                                             @csrf
+                                            @method('DELETE')
                                             <button class="btn btn-outline-danger">
                                                 <!-- Delete icon -->
                                                 <i class="bi bi-trash"></i>
@@ -141,13 +151,13 @@
                             <tr> 
                                 <td>{{$employee['first_name']}}</td>
                                 <td>{{$employee['last_name']}}</td>
-                                <td>{{$employee['phone']}}</td>
                                 <td>{{$employee['email']}}</td>
+                                <td>{{$employee['phone']}}</td>
                             
                                 <td>
                                     <div class="row">
                                         <div class="col-3">
-                                            <img style="width: 50px; height: 50px;" class="rounded-circle" src="{{ asset('storage/'.$company['logo']) }}" alt="logo" />
+                                            <img style="width: 50px; height: 50px;" class="rounded-circle" src="{{ asset('storage/'.$employee->company->logo) }}" alt="logo" />
                                         </div>
                                         <div class="col-9">
                                             {{ $employee->company->name }}
@@ -155,17 +165,32 @@
                                     </div>
                                 </td>
 
+
+
+
                                 <td>
                                     <div class="col-6">
-                                        <form class="my-2" action="/logout" method="POST">
-                                            @csrf
-                                            <button class="btn btn-outline-success">
-                                                <!-- Edit icon -->
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                        </form>
+
+                                        <a class="my-2 btn btn-outline-success" href="/edit-employee/{{$employee->id}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
                                     </div>
                                 </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <td>
                                     <div class="col-6">
                                         <form class="my-2" action="/logout" method="POST">
@@ -182,6 +207,13 @@
                     </tbody>
                 </table>
             </div>
+
+
+
+
+
+
+
 
             <!-- create company and employee forms -->
             <div class="container my-5">
