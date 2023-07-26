@@ -26,6 +26,7 @@ Route::get('/', function () {
 
 Route::post('/login' , [UserController::class , 'login']);
 Route::post('/logout' , [UserController::class , 'logout']);
+
 Route::post('/create-company' , [CompanyController::class , 'createCompany']);
 Route::post('/create-employee' , [EmployeeController::class , 'createEmployee']);
 
@@ -34,3 +35,6 @@ Route::put('/edit-company/{company}' , [CompanyController::class , 'updateCompan
 
 Route::get('/edit-employee/{employee}' , [EmployeeController::class , 'showEditScreen']);
 Route::put('/edit-employee/{employee}' , [EmployeeController::class , 'updateEmployee']);
+
+Route::delete('/delete-company/{company}' , [CompanyController::class , 'deleteCompany']);
+Route::delete('/delete-employee/{employee}' , [EmployeeController::class , 'deleteEmployee']);

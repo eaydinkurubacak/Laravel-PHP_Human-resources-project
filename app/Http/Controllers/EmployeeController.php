@@ -7,24 +7,30 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+    public function deleteEmployee(Employee $employee){
+        $employee->delete();
+        return redirect('/');
+    }
+
     public function updateEmployee(Employee $employee , Request $request){
 
         $incomingFields = $request->validate([
             'employee_firstname' => 'required',
             'employee_lastname' => 'required',
-            'employee_email' => 'nullable',
-            'employee_phone' => 'required',
+            'employee_email' => 'nullable|email:rfc,dns,filter,spoof',
+            'employee_phone' => 'required|regex:/^[0-9\s+\-\(\)]+$/',
+        ],[
+            'employee_firstname.required' => 'First name is required.',
+            'employee_lastname.required' => 'Last name is required.',
+            'employee_phone.required' => 'Phone number is required.',
+            'employee_email.email' => 'Email must be a valid.',
+            'employee_phone.regex' => 'The phone number must be a valid format with digits, spaces, hyphens, plus signs, and parentheses.'
         ]);
 
-        $incomingFields['employee_firstname'] = strip_tags($incomingFields['employee_firstname']);
-        $incomingFields['employee_lastname'] = strip_tags($incomingFields['employee_lastname']);
-        $incomingFields['employee_email'] = strip_tags($incomingFields['employee_email']);
-        $incomingFields['employee_phone'] = strip_tags($incomingFields['employee_phone']);
-
-        $employee->first_name = $incomingFields['employee_firstname'];
-        $employee->last_name = $incomingFields['employee_lastname'];
-        $employee->email = $incomingFields['employee_email'];
-        $employee->phone = $incomingFields['employee_phone'];
+        $employee->first_name = strip_tags($incomingFields['employee_firstname']);
+        $employee->last_name = strip_tags($incomingFields['employee_lastname']);
+        $employee->email = strip_tags($incomingFields['employee_email']);
+        $employee->phone = strip_tags($incomingFields['employee_phone']);
 
         $employee->save();
         return redirect('/');
@@ -39,17 +45,23 @@ class EmployeeController extends Controller
         $incomingFields = $request->validate([
             'employee_firstname' => 'required',
             'employee_lastname' => 'required',
-            'employee_email' => 'nullable',
-            'employee_phone' => 'required',
+            'employee_email' => 'nullable|email:rfc,dns,filter,spoof',
+            'employee_phone' => 'required|regex:/^[0-9\s+\-\(\)]+$/',
             'selected_company' => 'required'
+        ],[
+            'employee_firstname.required' => 'First name is required.',
+            'employee_lastname.required' => 'Last name is required.',
+            'employee_phone.required' => 'Phone number is required.',
+            'employee_email.email' => 'Email must be a valid.',
+            'employee_phone.regex' => 'The phone number must be a valid format with digits, spaces, hyphens, plus signs, and parentheses.',
+            'selected_company.required' => 'Please select a company for the employee.'
         ]);
    
-        // DB kayıt işlemi başarılı. ?
         $company = Employee::create([
             'first_name' => strip_tags($incomingFields['employee_firstname']),
             'last_name' => strip_tags($incomingFields['employee_lastname']),
-            'email' => strip_tags($incomingFields['employee_phone']),
-            'phone' => strip_tags($incomingFields['employee_email']),
+            'email' => strip_tags($incomingFields['employee_email']),
+            'phone' => strip_tags($incomingFields['employee_phone']),
             'company_id' => $incomingFields['selected_company']
         ]);
         
